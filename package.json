@@ -1,0 +1,29 @@
+{
+  "name": "firefox-dictionary",
+  "version": "1.0.0",
+  "description": "Contextual dictionary for Firefox that uses https://dictionaryapi.dev/",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "del dist",
+    "build": "npm run clean && tsc src/index.ts --outfile dist/dictionary.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adrianlafond/firefox-dictionary.git"
+  },
+  "keywords": [
+    "dictionary",
+    "firefox"
+  ],
+  "author": "Adrian Lafond <mail@adrianlafond.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adrianlafond/firefox-dictionary/issues"
+  },
+  "homepage": "https://github.com/adrianlafond/firefox-dictionary#readme",
+  "devDependencies": {
+    "del-cli": "^4.0.1",
+    "typescript": "^4.4.2"
+  }
+}
