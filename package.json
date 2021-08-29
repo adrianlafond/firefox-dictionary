@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --coverage",
-    "clean": "del dist",
-    "build": "npm run clean && tsc --outDir dist"
+    "clean": "del js",
+    "build": "npm run clean && tsc --outDir js"
   },
   "repository": {
     "type": "git",

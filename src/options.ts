@@ -1,37 +1,89 @@
+
 function onSelectLangInput(event: Event) {
   const { value } = event.target as HTMLSelectElement;
   browser.storage.local.set({ lang: value });
 }
 
-function initSelectLang(lang: string) {
-  const selectLang: HTMLSelectElement | null = document.querySelector('select[name=lang]');
-  if (selectLang) {
-    for (let i = 0; i < selectLang.options.length; i++) {
-      if (selectLang.options[i].value === lang) {
-        selectLang.options[i].selected = true;
-        break;
-      }
-    }
-    selectLang.addEventListener('input', onSelectLangInput);
+function onSelectSearchInput(event: Event) {
+  const { value } = event.target as HTMLSelectElement;
+  browser.storage.local.set({ search: value });
+  toggleInputSearch(value === 'other');
+}
+
+function onInputSearchInput(event: Event) {
+  browser.storage.local.set({ searchUrl: (event.target as HTMLInputElement).value });
+}
+
+function onInputSearchKeyUp(event: KeyboardEvent) {
+  if (event.key === 'Enter') {
+    (event.target as HTMLInputElement).blur();
   }
 }
 
-function destroySelectLang() {
-  const selectLang: HTMLSelectElement | null = document.querySelector('select[name=lang]');
-  if (selectLang) {
-    selectLang.removeEventListener('input', onSelectLangInput);
+function initInputSearch(value: string, enabled = false) {
+  const input: HTMLInputElement | null = document.querySelector(`input[name=search-url]`);
+  if (input) {
+    browser.storage.local.set({ searchUrl: input.value });
+    input.value = value;
+    input.addEventListener('input', onInputSearchInput);
+    input.addEventListener('keyup', onInputSearchKeyUp);
+    toggleInputSearch(enabled, input);
+  }
+}
+
+function destroyInputSearch() {
+  const input: HTMLInputElement | null = document.querySelector(`input[name=search-url]`);
+  if (input) {
+    input.classList.remove('dict-opts__search-url--shown');
+    input.removeEventListener('input', onInputSearchInput);
+    input.removeEventListener('keyup', onInputSearchKeyUp);
+  }
+}
+
+function toggleInputSearch(enabled: boolean, input?: HTMLInputElement) {
+  const el = input || document.querySelector(`input[name=search-url]`);
+  if (el) {
+    el.classList[enabled ? 'add' : 'remove']('dict-opts__search-url--shown');
+  }
+}
+
+function initSelect(name: string, value: string, onInput: (event: Event) => void) {
+  const select: HTMLSelectElement | null = document.querySelector(`select[name=${name}]`);
+  if (select) {
+    for (let i = 0; i < select.options.length; i++) {
+      if (select.options[i].value === value) {
+        select.options[i].selected = true;
+        break;
+      }
+    }
+    select.addEventListener('input', onInput);
+  }
+}
+
+function destroySelect(name: string, onInput: (event: Event) => void) {
+  const select: HTMLSelectElement | null = document.querySelector(`select[name=${name}]`);
+  if (select) {
+    select.removeEventListener('input', onInput);
   }
 }
 
 function destroy() {
-  destroySelectLang();
+  destroySelect('lang', onSelectLangInput);
+  destroySelect('search', onSelectSearchInput);
+  destroyInputSearch();
   window.removeEventListener('pagehide', destroy);
 }
 
 function init() {
-  browser.storage.local.get({ lang: 'en' })
+  browser.storage.local.get({
+      lang: 'en',
+      search: 'google',
+      searchUrl: '',
+    })
     .then((record: Record<string, any>) => {
-      initSelectLang(record.lang);
+      initSelect('lang', record.lang, onSelectLangInput);
+      initSelect('search', record.search, onSelectSearchInput);
+      initInputSearch(record.searchUrl, record.search === 'other');
     });
   window.addEventListener('pagehide', destroy);
 }
