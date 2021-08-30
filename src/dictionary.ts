@@ -15,5 +15,3 @@ const dictionary = {
 };
 
 dictionary.init();
-
-console.log('does this run?');
