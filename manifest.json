@@ -19,6 +19,8 @@
         "<all_urls>"
       ],
       "js": [
+        "content/handlebars.min.js",
+        "content/popper.min.js",
         "js/constants.js",
         "js/search.js",
         "js/dictionary.js"
