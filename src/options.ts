@@ -67,17 +67,17 @@ function destroySelect(name: string, onInput: (event: Event) => void) {
   }
 }
 
-function destroy() {
+function destroyOptions() {
   destroySelect('lang', onSelectLangInput);
   destroySelect('search', onSelectSearchInput);
   destroyInputSearch();
-  window.removeEventListener('pagehide', destroy);
+  window.removeEventListener('pagehide', destroyOptions);
 }
 
-function init() {
+function initOptions() {
   browser.storage.local.get({
       lang: 'en',
-      search: 'google',
+      search: 'ecosia',
       searchUrl: '',
     })
     .then((record: Record<string, any>) => {
@@ -85,7 +85,7 @@ function init() {
       initSelect('search', record.search, onSelectSearchInput);
       initInputSearch(record.searchUrl, record.search === 'other');
     });
-  window.addEventListener('pagehide', destroy);
+  window.addEventListener('pagehide', destroyOptions);
 }
 
-init();
+initOptions();

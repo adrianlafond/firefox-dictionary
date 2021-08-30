@@ -1,3 +1,19 @@
-import { search } from './search';
+interface Window {
+  onContextMenuClick: (data: any) => void;
+  dictionaryBackground: any;
+}
 
-console.log(search);
+const dictionary = {
+  handleContextMenuClick: (message: { selectionText?: string }) => {
+    console.dir(message);
+    console.log(window.getSelection()?.getRangeAt(0).getBoundingClientRect());
+  },
+
+  init: () => {
+    browser.runtime.onMessage.addListener(dictionary.handleContextMenuClick);
+  },
+};
+
+dictionary.init();
+
+console.log('does this run?');

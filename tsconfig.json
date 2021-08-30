@@ -1,18 +1,24 @@
 {
   "compilerOptions": {
+    "declaration": false,
+    "allowUmdGlobalAccess": true,
     "allowUnreachableCode": false,
     "alwaysStrict": true,
     "noImplicitAny": true,
     "noImplicitOverride": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "moduleResolution": "node",
+    "module": "es6",
+    "esModuleInterop": true,
     "strict": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "module": "CommonJS",
-    "moduleResolution": "node",
-    "target": "ES2015",
-    "resolveJsonModule": true
+    "target": "es2015",
+    "lib": [
+      "esnext",
+      "dom"
+    ],
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "js"]

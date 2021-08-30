@@ -1,10 +1,6 @@
-import { lang as defaultLang } from './settings';
+const apiUrl = (word: string, lang = DEFAULT_LANG) => `${API_URL}/${lang}/${word}`;
 
-export const API = 'https://api.dictionaryapi.dev/api/v2/entries';
-
-export const apiUrl = (word: string, lang = defaultLang) => `${API}/${lang}/${word}`;
-
-export interface apiResult {
+interface apiResult {
   word: string;
   phonetic: string;
   phonetics: { text: string; audio?: string }[];
@@ -20,12 +16,12 @@ export interface apiResult {
   }[];
 };
 
-export interface searchResult {
+interface searchResult {
   error?: number;
   data?: apiResult[];
 }
 
-export function search(word: string, lang = defaultLang): Promise<searchResult> {
+function search(word: string, lang = DEFAULT_LANG): Promise<searchResult> {
   return fetch(apiUrl(word, lang))
     .then(resp => resp.status === 200 ? resp.json() : resp.status)
     .then(json => (typeof json === 'number' ? { error: json } : { data: json }))

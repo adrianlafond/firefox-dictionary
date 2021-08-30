@@ -7,14 +7,24 @@
     "48": "icons/icon-48.png",
     "96": "icons/icon-96.png"
   },
+  "background": {
+    "scripts": [
+      "js/constants.js",
+      "js/background.js"
+    ]
+  },
   "content_scripts": [
     {
       "matches": [
         "<all_urls>"
       ],
       "js": [
-        "./js/dictionary.js"
-      ]
+        "js/constants.js",
+        "js/search.js",
+        "js/dictionary.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
     }
   ],
   "options_ui": {
@@ -23,6 +33,8 @@
     "chrome_style": true
   },
   "permissions": [
-    "storage"
+    "contextMenus",
+    "storage",
+    "tabs"
   ]
 }
