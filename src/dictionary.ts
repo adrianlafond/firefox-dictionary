@@ -15,24 +15,45 @@ const dictionary: {
     // @ts-ignore Popper will be defined globally.
     const { createPopper } = Popper;
 
+    const selection = window.getSelection();
+    const word = message.selectionText || '';
+
     const panel = dictionary.getDefinitionPanel();
     if (!panel.classList.contains(`${BLOCK}--shown`)) {
       panel.classList.add(`${BLOCK}--shown`);
     }
     panel.innerHTML = dictionary.template({ loading: true });
 
-    search(message.selectionText || '', DEFAULT_LANG)
+    const templateData = {
+      loading: false,
+      notFound: null,
+      error: false,
+      data: null,
+    };
+    search(word, DEFAULT_LANG)
       .then((result: SearchResult) => {
         const { error, data } = result;
-        if (error) {
-          panel.innerHTML = dictionary.template({ loading: false, error });
+        if (error === 0) {
+          panel.innerHTML = dictionary.template({
+            ...templateData,
+            notFound: word,
+          });
+        } else if (error) {
+          panel.innerHTML = dictionary.template({
+            ...templateData,
+            error,
+          });
         } else if (data) {
-          panel.innerHTML = dictionary.template({ loading: false, error: false, data });
+          console.log(data);
+          panel.innerHTML = dictionary.template({
+            ...templateData,
+            data,
+          });
         }
       });
 
     createPopper(
-      window.getSelection()?.getRangeAt(0),
+      selection?.getRangeAt(0),
       panel,
       {},
     );
