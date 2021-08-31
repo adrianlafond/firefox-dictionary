@@ -22,6 +22,7 @@
         "content/handlebars.min.js",
         "content/popper.min.js",
         "js/constants.js",
+        "js/template.js",
         "js/search.js",
         "js/dictionary.js"
       ],
@@ -38,6 +39,7 @@
   "permissions": [
     "contextMenus",
     "storage",
-    "tabs"
+    "tabs",
+    "https://api.dictionaryapi.dev/"
   ]
 }

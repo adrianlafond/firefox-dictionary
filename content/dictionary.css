@@ -1,19 +1,35 @@
 .extension-handy-dictionary {
+  position: absolute;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 16px;
   font-weight: normal;
   background-color: #eee;
   color: black;
-  border: 1px solid #bbb;
+  border: 1px solid #ccc;
   border-radius: 12px;
   width: 360px;
   max-width: 80vw;
   max-height: min(480px, 80vh);
+  overflow-x: hidden;
+  overflow-y: auto;
   box-shadow: 6px 6px 16px 0px rgba(0, 0, 0, 0.25);
-  padding: 16px;
+  padding: 16px 16px 56px;
   display: none;
 }
 
 .extension-handy-dictionary--shown {
   display: block;
+}
+
+.extension-handy-dictionary__status-bar {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  border-color: #ccc;
+  border-style: solid;
+  border-width: 1px 0 0;
+  background-color: #ddd;
+  padding: 8px 16px;
+  text-align: right;
 }

@@ -3,7 +3,6 @@ type PanelType = HTMLDivElement | null;
 const dictionary: {
   panel: PanelType;
   template: any;
-  className: string;
   handleContextMenuClick: (message: { selectionText?: string }) => void;
   onMouseDown: (event: MouseEvent) => void;
   getDefinitionPanel(): HTMLDivElement;
@@ -11,17 +10,26 @@ const dictionary: {
 } = {
   panel: null,
   template: null,
-  className: 'extension-handy-dictionary',
 
-  handleContextMenuClick: () => {
+  handleContextMenuClick: (message: { selectionText?: string }) => {
     // @ts-ignore Popper will be defined globally.
     const { createPopper } = Popper;
 
     const panel = dictionary.getDefinitionPanel();
-    if (!panel.classList.contains(`${dictionary.className}--shown`)) {
-      panel.classList.add(`${dictionary.className}--shown`);
+    if (!panel.classList.contains(`${BLOCK}--shown`)) {
+      panel.classList.add(`${BLOCK}--shown`);
     }
-    panel.innerHTML = dictionary.template({ what: 'works, hopefully' });
+    panel.innerHTML = dictionary.template({ loading: true });
+
+    search(message.selectionText || '', DEFAULT_LANG)
+      .then((result: SearchResult) => {
+        const { error, data } = result;
+        if (error) {
+          panel.innerHTML = dictionary.template({ loading: false, error });
+        } else if (data) {
+          panel.innerHTML = dictionary.template({ loading: false, error: false, data });
+        }
+      });
 
     createPopper(
       window.getSelection()?.getRangeAt(0),
@@ -36,7 +44,7 @@ const dictionary: {
     const { panel } = dictionary;
     const target = event.target as HTMLElement
     if (target && panel && panel !== target && !panel.contains(target)) {
-      panel.classList.remove(`${dictionary.className}--shown`);
+      panel.classList.remove(`${BLOCK}--shown`);
       window.removeEventListener('mousedown', dictionary.onMouseDown);
     }
   },
@@ -47,7 +55,7 @@ const dictionary: {
       dictionary.panel.className = 'extension-handy-dictionary';
 
       // @ts-ignore Handlebars will be defined globally.
-      dictionary.template = Handlebars.compile('<p>Handlebars <b>{{what}}</b></p>');
+      dictionary.template = Handlebars.compile(TEMPLATE);
 
       document.body.appendChild(dictionary.panel);
     }
