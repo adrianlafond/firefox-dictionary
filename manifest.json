@@ -25,7 +25,8 @@
         "js/search.js",
         "js/dictionary.js"
       ],
-      "run_at": "document_start",
+      "css": ["content/dictionary.css"],
+      "run_at": "document_end",
       "all_frames": true
     }
   ],

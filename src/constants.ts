@@ -1,4 +1,4 @@
-const APP_ID = 'handy-dictionary';
+const APP_ID = '___handy-dictionary___';
 
 const API_URL = 'https://api.dictionaryapi.dev/api/v2/entries';
 
