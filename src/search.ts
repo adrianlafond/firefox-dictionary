@@ -22,9 +22,12 @@ interface SearchResult {
 }
 
 function search(word: string, lang = DEFAULT_LANG): Promise<SearchResult> {
-  console.log(apiUrl(word, lang));
   return fetch(apiUrl(word, lang))
     .then(resp => resp.status === 200 ? resp.json() : resp.status)
     .then(json => (typeof json === 'number' ? { error: json } : { data: json }))
     .catch(() => ({ error: 400 }));
+}
+
+function getSearchHref(url: string, word: string) {
+  return url.replace(/%s/g, word);
 }

@@ -1,86 +1,133 @@
 type PanelType = HTMLDivElement | null;
 
-const dictionary: {
-  panel: PanelType;
-  template: any;
-  handleContextMenuClick: (message: { selectionText?: string }) => void;
-  onMouseDown: (event: MouseEvent) => void;
-  getDefinitionPanel(): HTMLDivElement;
-  init: () => void;
-} = {
+const dictionary: any = {
   panel: null,
   template: null,
+  loadingTimeout: 0,
 
-  handleContextMenuClick: (message: { selectionText?: string }) => {
-    // @ts-ignore Popper will be defined globally.
-    const { createPopper } = Popper;
-
-    const selection = window.getSelection();
+  handleContextMenuClick: async (message: { selectionText?: string }) => {
+    const options = await dictionary.getOptions();
     const word = message.selectionText || '';
 
-    const panel = dictionary.getDefinitionPanel();
-    if (!panel.classList.contains(`${BLOCK}--shown`)) {
-      panel.classList.add(`${BLOCK}--shown`);
-    }
-    panel.innerHTML = dictionary.template({ loading: true });
-
-    const templateData = {
-      loading: false,
-      notFound: null,
-      error: false,
-      data: null,
-    };
-    search(word, DEFAULT_LANG)
-      .then((result: SearchResult) => {
-        const { error, data } = result;
-        if (error === 0) {
-          panel.innerHTML = dictionary.template({
-            ...templateData,
-            notFound: word,
-          });
-        } else if (error) {
-          panel.innerHTML = dictionary.template({
-            ...templateData,
-            error,
-          });
-        } else if (data) {
-          console.log(data);
-          panel.innerHTML = dictionary.template({
-            ...templateData,
-            data,
-          });
-        }
+    clearTimeout(dictionary.loadingTimeout);
+    dictionary.loadingTimeout = setTimeout(() => {
+      dictionary.createPanel();
+      dictionary.showPanel();
+      dictionary.panel.innerHTML = dictionary.template({
+        ...dictionary.getTemplateData(word, options),
+        loading: true,
       });
+    }, 250);
 
-    createPopper(
-      selection?.getRangeAt(0),
-      panel,
-      {},
-    );
-
-    window.addEventListener('mousedown', dictionary.onMouseDown);
+    const result = await search(word, options.lang);
+    clearTimeout(dictionary.loadingTimeout);
+    dictionary.createPanel();
+    dictionary.showPanel();
+    dictionary.displaySearch(word, result, options);
   },
 
-  onMouseDown: (event: MouseEvent) => {
-    const { panel } = dictionary;
-    const target = event.target as HTMLElement
-    if (target && panel && panel !== target && !panel.contains(target)) {
-      panel.classList.remove(`${BLOCK}--shown`);
-      window.removeEventListener('mousedown', dictionary.onMouseDown);
-    }
+  getOptions() {
+    return browser.storage.local.get({
+      lang: DEFAULT_LANG,
+      search: DEFAULT_SEARCH,
+      searchUrl: '',
+    })
+   .then((record: Record<string, any>) => record);
   },
 
-  getDefinitionPanel() {
+  createPanel() {
     if (!dictionary.panel) {
       dictionary.panel = document.createElement('div');
-      dictionary.panel.className = 'extension-handy-dictionary';
+      dictionary.panel.className = BLOCK;
 
       // @ts-ignore Handlebars will be defined globally.
       dictionary.template = Handlebars.compile(TEMPLATE);
 
       document.body.appendChild(dictionary.panel);
     }
-    return dictionary.panel;
+  },
+
+  showPanel() {
+    if (!dictionary.panel.classList.contains(`${BLOCK}--shown`)) {
+      dictionary.panel.classList.add(`${BLOCK}--shown`);
+    }
+
+    // @ts-ignore Popper will be defined globally.
+    Popper.createPopper(
+      window.getSelection()?.getRangeAt(0),
+      dictionary.panel,
+      {},
+    );
+
+    window.addEventListener('mousedown', dictionary.onMouseDown);
+    // window.addEventListener('blur', dictionary.onWindowBlur);
+  },
+
+  onMouseDown: (event: MouseEvent) => {
+    const { panel } = dictionary;
+    const target = event.target as HTMLElement
+    if (target && panel && panel !== target && !panel.contains(target)) {
+      dictionary.hidePanel();
+    }
+  },
+
+  onWindowBlur: () => {
+    dictionary.hidePanel();
+  },
+
+  hidePanel() {
+    dictionary.panel.classList.remove(`${APP_ID}--shown`);
+    window.removeEventListener('mousedown', dictionary.onMouseDown);
+    window.removeEventListener('blur', dictionary.onWindowBlur);
+  },
+
+  displaySearch(word: string, result: SearchResult, options: Record<string, any>) {
+    const { error, data } = result;
+    const { panel } = dictionary;
+
+    if (error === 404) {
+      panel.innerHTML = dictionary.template({
+        ...dictionary.getTemplateData(word, options),
+        notFound: word,
+      });
+    } else if (error) {
+      panel.innerHTML = dictionary.template({
+        ...dictionary.getTemplateData(word, options),
+        error,
+      });
+    } else if (data) {
+      panel.innerHTML = dictionary.template({
+        ...dictionary.getTemplateData(word, options),
+        data: {
+          ...data,
+        },
+      });
+    }
+  },
+
+  getTemplateData(word: string, options: Record<string, any>) {
+    const searchData = options.search === 'other'
+      ? {
+        label: 'the Web',
+        href: getSearchHref(options.searchUrl, word),
+      } : {
+        label: SEARCH[options.search as keyof typeof SEARCH].label,
+        href: getSearchHref(
+          SEARCH[options.search as keyof typeof SEARCH].url,
+          word
+        ),
+      };
+
+    return {
+      loading: false,
+      notFound: null,
+      error: false,
+      search: {
+        key: options.search,
+        ...searchData,
+      },
+      data: null,
+    };
   },
 
   init: () => {
