@@ -61,8 +61,6 @@ const dictionary: any = {
 
     window.addEventListener('mousedown', dictionary.onMouseDown);
     // window.addEventListener('blur', dictionary.onWindowBlur);
-
-    audio.init(dictionary.panel);
   },
 
   onMouseDown: (event: MouseEvent) => {
@@ -105,6 +103,7 @@ const dictionary: any = {
           ...data,
         },
       });
+      audio.init(dictionary.panel);
     }
   },
 

@@ -41,6 +41,7 @@
     "contextMenus",
     "storage",
     "tabs",
-    "https://api.dictionaryapi.dev/"
+    "https://api.dictionaryapi.dev/",
+    "https://ssl.gstatic.com/"
   ]
 }
