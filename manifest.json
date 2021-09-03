@@ -24,6 +24,7 @@
         "js/constants.js",
         "js/template.js",
         "js/search.js",
+        "js/audio.js",
         "js/dictionary.js"
       ],
       "css": ["content/dictionary.css"],

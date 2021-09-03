@@ -61,6 +61,8 @@ const dictionary: any = {
 
     window.addEventListener('mousedown', dictionary.onMouseDown);
     // window.addEventListener('blur', dictionary.onWindowBlur);
+
+    audio.init(dictionary.panel);
   },
 
   onMouseDown: (event: MouseEvent) => {
@@ -76,6 +78,7 @@ const dictionary: any = {
   },
 
   hidePanel() {
+    audio.destroy(dictionary.panel);
     dictionary.panel.classList.remove(`${APP_ID}--shown`);
     window.removeEventListener('mousedown', dictionary.onMouseDown);
     window.removeEventListener('blur', dictionary.onWindowBlur);

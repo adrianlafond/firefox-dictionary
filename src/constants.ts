@@ -28,3 +28,5 @@ const SEARCH = {
 const DEFAULT_LANG = 'en';
 
 const DEFAULT_SEARCH = 'ecosia';
+
+const AUDIO_TRACK = 'data-extension-dictionary-audio';
