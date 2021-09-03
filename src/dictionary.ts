@@ -9,6 +9,8 @@ const dictionary: any = {
     const options = await dictionary.getOptions();
     const word = message.selectionText || '';
 
+    audio.checkSiteSecurity();
+
     clearTimeout(dictionary.loadingTimeout);
     dictionary.loadingTimeout = setTimeout(() => {
       dictionary.createPanel();
