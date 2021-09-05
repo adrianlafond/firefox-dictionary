@@ -28,6 +28,6 @@ function search(word: string, lang = DEFAULT_LANG): Promise<SearchResult> {
     .catch(() => ({ error: 400 }));
 }
 
-function getSearchHref(url: string, word: string) {
-  return url.replace(/%s/g, word);
+function getSearchHref(url: string, word: string, lang = 'en') {
+  return url.replace(/%s/g, word).replace(/%l/g, lang);
 }

@@ -56,6 +56,10 @@ const TEMPLATE = `
             </div>
           </div>
         {{/each}}
+
+        <p class="${BLOCK}__csp">
+          Audio of this word's pronunciation has been disabled by a content security policy on this website.
+        </p>
       {{/if}}
     </div>
   </div>

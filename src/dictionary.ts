@@ -8,9 +8,6 @@ const dictionary: any = {
   handleContextMenuClick: async (message: { selectionText?: string }) => {
     const options = await dictionary.getOptions();
     const word = message.selectionText || '';
-
-    audio.checkSiteSecurity();
-
     clearTimeout(dictionary.loadingTimeout);
     dictionary.loadingTimeout = setTimeout(() => {
       dictionary.createPanel();
@@ -21,11 +18,24 @@ const dictionary: any = {
       });
     }, 250);
 
-    const result = await search(word, options.lang);
+    const result = await search(word, dictionary.getSiteLang() || options.lang);
     clearTimeout(dictionary.loadingTimeout);
     dictionary.createPanel();
     dictionary.showPanel();
     dictionary.displaySearch(word, result, options);
+  },
+
+  getSiteLang() {
+    const html = document.querySelector('html');
+    if (html) {
+      const lang = html.getAttribute('lang');
+      console.log(lang);
+      if (lang && lang.length >= 2) {
+        console.log(lang.substring(0, 2));
+        return lang.substring(0, 2);
+      }
+    }
+    return null;
   },
 
   getOptions() {
@@ -62,7 +72,7 @@ const dictionary: any = {
     );
 
     window.addEventListener('mousedown', dictionary.onMouseDown);
-    // window.addEventListener('blur', dictionary.onWindowBlur);
+    window.addEventListener('blur', dictionary.onWindowBlur);
   },
 
   onMouseDown: (event: MouseEvent) => {
@@ -78,7 +88,7 @@ const dictionary: any = {
   },
 
   hidePanel() {
-    audio.destroy(dictionary.panel);
+    audio.destroy();
     dictionary.panel.classList.remove(`${APP_ID}--shown`);
     window.removeEventListener('mousedown', dictionary.onMouseDown);
     window.removeEventListener('blur', dictionary.onWindowBlur);
@@ -105,20 +115,22 @@ const dictionary: any = {
           ...data,
         },
       });
-      audio.init(dictionary.panel);
+      audio.init(panel);
     }
   },
 
   getTemplateData(word: string, options: Record<string, any>) {
+    const lang = dictionary.getSiteLang() || options.lang;
     const searchData = options.search === 'other'
       ? {
         label: 'the Web',
-        href: getSearchHref(options.searchUrl, word),
+        href: getSearchHref(options.searchUrl, word, lang),
       } : {
         label: SEARCH[options.search as keyof typeof SEARCH].label,
         href: getSearchHref(
           SEARCH[options.search as keyof typeof SEARCH].url,
-          word
+          word,
+          lang,
         ),
       };
 
