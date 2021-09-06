@@ -29,9 +29,7 @@ const dictionary: any = {
     const html = document.querySelector('html');
     if (html) {
       const lang = html.getAttribute('lang');
-      console.log(lang);
       if (lang && lang.length >= 2) {
-        console.log(lang.substring(0, 2));
         return lang.substring(0, 2);
       }
     }
@@ -72,7 +70,7 @@ const dictionary: any = {
     );
 
     window.addEventListener('mousedown', dictionary.onMouseDown);
-    window.addEventListener('blur', dictionary.onWindowBlur);
+    // window.addEventListener('blur', dictionary.onWindowBlur);
   },
 
   onMouseDown: (event: MouseEvent) => {

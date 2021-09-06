@@ -62,6 +62,7 @@
 .extension-handy-dictionary--shown {
   display: flex;
   flex-direction: column;
+  z-index: 9999999;
 }
 
 .extension-handy-dictionary__status-bar {
@@ -81,6 +82,10 @@
 
 .extension-handy-dictionary__entry {
   display: block;
+  margin-top: 12px;
+}
+.extension-handy-dictionary__entry:first-of-type {
+  margin-top: 0;
 }
 
 .extension-handy-dictionary__content {
@@ -96,6 +101,7 @@
 
 .extension-handy-dictionary__title-block {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 }
 
@@ -140,6 +146,7 @@
 
 .extension-handy-dictionary__meanings ol {
   margin: 0;
+  padding-left: 16px;
 }
 .extension-handy-dictionary__part-of-speech {
   color: var(--fg-light-color);
