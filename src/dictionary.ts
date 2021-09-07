@@ -18,7 +18,7 @@ const dictionary: any = {
       });
     }, 250);
 
-    const result = await search(word, dictionary.getSiteLang() || options.lang);
+    const result = await search.define(word, dictionary.getSiteLang() || options.lang);
     clearTimeout(dictionary.loadingTimeout);
     dictionary.createPanel();
     dictionary.showPanel();
@@ -122,10 +122,10 @@ const dictionary: any = {
     const searchData = options.search === 'other'
       ? {
         label: 'the Web',
-        href: getSearchHref(options.searchUrl, word, lang),
+        href: search.getWebUrl(options.searchUrl, word, lang),
       } : {
         label: SEARCH[options.search as keyof typeof SEARCH].label,
-        href: getSearchHref(
+        href: search.getWebUrl(
           SEARCH[options.search as keyof typeof SEARCH].url,
           word,
           lang,
