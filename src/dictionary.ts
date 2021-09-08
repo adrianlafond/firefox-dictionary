@@ -70,7 +70,8 @@ const dictionary: any = {
     );
 
     window.addEventListener('mousedown', dictionary.onMouseDown);
-    // window.addEventListener('blur', dictionary.onWindowBlur);
+    window.addEventListener('blur', dictionary.onWindowBlur);
+    window.addEventListener('keydown', dictionary.onKeyDown);
   },
 
   onMouseDown: (event: MouseEvent) => {
@@ -85,11 +86,19 @@ const dictionary: any = {
     dictionary.hidePanel();
   },
 
+  onKeyDown: (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      dictionary.hidePanel();
+      event.preventDefault();
+    }
+  },
+
   hidePanel() {
     audio.destroy();
     dictionary.panel.classList.remove(`${APP_ID}--shown`);
     window.removeEventListener('mousedown', dictionary.onMouseDown);
     window.removeEventListener('blur', dictionary.onWindowBlur);
+    window.removeEventListener('keydown', dictionary.onKeyDown);
   },
 
   displaySearch(word: string, result: SearchResult, options: Record<string, any>) {

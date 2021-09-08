@@ -6,8 +6,9 @@ const dictionaryBackground = {
       contexts: ['selection'],
     });
 
-    // menuItemId: string | number;
-    browser.contextMenus.onClicked.addListener((data: any, tab?: { id?: number }) => {
+    browser.contextMenus.onClicked.addListener((
+      data: { menuItemId: string | number}, tab?: { id?: number }
+    ) => {
       if (data.menuItemId === APP_ID) {
         browser.tabs.sendMessage(tab?.id || 0, data);
       }

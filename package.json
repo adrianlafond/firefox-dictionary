@@ -4,9 +4,14 @@
   "description": "Contextual dictionary for Firefox that uses https://dictionaryapi.dev/",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage",
-    "clean": "del js",
-    "build": "npm run clean && tsc --outDir js"
+    "test": "npm run test:prep && jest --coverage",
+    "test:prep": "npm run clean:temp && npm run make:temp && npm run concat:background && npm run concat:search",
+    "clean:js": "del js",
+    "clean:temp": "del temp",
+    "make:temp": "mkdir temp",
+    "build": "npm run clean:js && tsc --outDir js",
+    "concat:background": "concat -o temp/background.ts ./src/constants.ts ./src/background.ts ./exports/constants.ts ./exports/background.ts",
+    "concat:search": "concat -o temp/search.ts ./src/constants.ts ./src/search.ts ./exports/constants.ts ./exports/search.ts"
   },
   "repository": {
     "type": "git",
@@ -25,6 +30,7 @@
   "devDependencies": {
     "@types/jest": "^27.0.1",
     "@types/webextension-polyfill": "^0.8.0",
+    "concat": "^1.0.3",
     "del-cli": "^4.0.1",
     "fetch-mock": "^9.11.0",
     "jest": "^27.1.0",

@@ -20,6 +20,6 @@
       "dom"
     ],
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "js"]
+  "include": ["src/**/*", "temp/**/*"],
+  "exclude": ["node_modules", "js", "exports"]
 }

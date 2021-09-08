@@ -1,12 +1,12 @@
-import * as fetchMock from 'fetch-mock';
-import { search, apiUrl } from '../src/search';
+import fetchMock from 'fetch-mock';
+import { search } from '../temp/search';
 
 describe('apiUrl()', () => {
   it('includes the lang in the url', () => {
-    expect(apiUrl('test', 'xy')).toContain('/xy/');
+    expect(search.getApiUrl('test', 'xy')).toContain('/xy/');
   });
   it('includes the search term in the url', () => {
-    expect(apiUrl('test')).toContain('/test');
+    expect(search.getApiUrl('test')).toContain('/test');
   })
 });
 
@@ -68,30 +68,30 @@ describe('search()', () => {
   });
 
   it('returns a successful response', async () => {
-    fetchMock.mock(apiUrl('hello'), {
+    fetchMock.mock(search.getApiUrl('hello'), {
       body: successResponse,
       status: 200,
     });
-    const res = await search('hello');
+    const res = await search.define('hello');
     expect(res.data?.[0].word).toBe('hello');
     expect(res.error).toBeUndefined();
   });
   it('returns an appropriate error for not found', async () => {
-    fetchMock.mock(apiUrl('test'), 404);
-    const res = await search('test');
+    fetchMock.mock(search.getApiUrl('test'), 404);
+    const res = await search.define('test');
     expect(res.error).toBe(404);
   });
   it('returns an appropriate error for server error', async () => {
-    fetchMock.mock(apiUrl('test'), 500);
-    const res = await search('test');
+    fetchMock.mock(search.getApiUrl('test'), 500);
+    const res = await search.define('test');
     expect(res.error).toBe(500);
   });
   it('returns an error when fetch throws an error', async () => {
     fetchMock.catch
-    fetchMock.mock(apiUrl('test'), {
+    fetchMock.mock(search.getApiUrl('test'), {
       throws: new Error('fetch failed!')
     });
-    const res = await search('test');
+    const res = await search.define('test');
     expect(res.error).toBe(400);
   });
 });
