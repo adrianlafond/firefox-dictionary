@@ -38,7 +38,7 @@ const search: {
     return `${API_URL}/${lang}/${word}`;
   },
 
-  getWebUrl(url: string, word: string, lang = 'en') {
+  getWebUrl(url: string, word: string, lang = DEFAULT_LANG) {
     return url.replace(/%s/g, word).replace(/%l/g, lang);
   }
 };
