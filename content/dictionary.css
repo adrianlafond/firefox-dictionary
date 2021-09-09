@@ -13,6 +13,8 @@
   --csp-color: #900;
   --arrow-size: 10px;
   --arrow-size-inverted: -10px;
+  --arrow-offset: -20px;
+  --arrow-after-offset: -8px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -204,7 +206,6 @@
 
 /* arrow */
 .extension-handy-dictionary__arrow {
-  content: '';
   position: absolute;
   left: 50%;
   transform: translate(var(--arrow-size-inverted), 0);
@@ -214,12 +215,31 @@
 	border-right: var(--arrow-size) solid transparent;
 }
 [data-popper-placement^='top'] .extension-handy-dictionary__arrow {
-  bottom: -20px;
+  bottom: var(--arrow-offset);
   border-bottom: var(--arrow-size) solid transparent;
 	border-top: var(--arrow-size) solid var(--border-color);
 }
 [data-popper-placement^='bottom'] .extension-handy-dictionary__arrow {
-  top: -20px;
+  top: var(--arrow-offset);
   border-bottom: var(--arrow-size) solid var(--border-color);
+	border-top: var(--arrow-size) solid transparent;
+}
+
+.extension-handy-dictionary__arrow::after {
+  content: '';
+  position: absolute;
+  transform: translate(var(--arrow-size-inverted), 0);
+  transform-origin: center center;
+  border-left: var(--arrow-size) solid transparent;
+	border-right: var(--arrow-size) solid transparent;
+}
+[data-popper-placement^='top'] .extension-handy-dictionary__arrow::after {
+  bottom: var(--arrow-after-offset);
+  border-bottom: var(--arrow-size) solid transparent;
+	border-top: var(--arrow-size) solid var(--bg-color);
+}
+[data-popper-placement^='bottom'] .extension-handy-dictionary__arrow::after {
+  top: var(--arrow-after-offset);
+  border-bottom: var(--arrow-size) solid var(--bg-color);
 	border-top: var(--arrow-size) solid transparent;
 }

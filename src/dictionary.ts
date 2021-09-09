@@ -75,7 +75,7 @@ const dictionary: any = {
     );
 
     window.addEventListener('mousedown', dictionary.onMouseDown);
-    window.addEventListener('blur', dictionary.onWindowBlur);
+    // window.addEventListener('blur', dictionary.onWindowBlur);
     window.addEventListener('keydown', dictionary.onKeyDown);
   },
 
