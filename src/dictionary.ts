@@ -66,7 +66,12 @@ const dictionary: any = {
     Popper.createPopper(
       window.getSelection()?.getRangeAt(0),
       dictionary.panel,
-      {},
+      {
+        modifiers: [{
+          name: 'offset',
+          options: { offset: [0, 10] },
+        }],
+      },
     );
 
     window.addEventListener('mousedown', dictionary.onMouseDown);

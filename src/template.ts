@@ -68,4 +68,5 @@ const TEMPLATE = `
       Look up on {{search.label}}
     </a>
   </div>
+  <div class="${BLOCK}__arrow"></div>
 `;
