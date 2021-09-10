@@ -1,1 +1,1 @@
-export { ApiResult, SearchResult, search };
+export { ApiResult, SearchResult, Search };

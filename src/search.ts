@@ -22,23 +22,20 @@ interface SearchResult {
   data?: ApiResult[];
 }
 
-const search: {
-  define: (word: string, lang?: string) => Promise<SearchResult>;
-  getApiUrl: (word: string, lang?: string) => string;
-  getWebUrl: (url: string, word: string, lang?: string) => string;
-} = {
-  define(word: string, lang = DEFAULT_LANG): Promise<SearchResult> {
-    return fetch(search.getApiUrl(word, lang))
+class Search {
+  static define(word: string, lang = DEFAULT_LANG): Promise<SearchResult> {
+    return fetch(Search.getApiUrl(word, lang))
       .then(resp => resp.status === 200 ? resp.json() : resp.status)
       .then(json => (typeof json === 'number' ? { error: json } : { data: json }))
       .catch(() => ({ error: 400 }));
-  },
+  }
 
-  getApiUrl(word: string, lang = DEFAULT_LANG) {
+  static getApiUrl(word: string, lang = DEFAULT_LANG) {
     return `${API_URL}/${lang}/${word}`;
-  },
+  }
 
-  getWebUrl(url: string, word: string, lang = DEFAULT_LANG) {
+  static getWebUrl(url: string, word: string, lang = DEFAULT_LANG) {
     return url.replace(/%s/g, word).replace(/%l/g, lang);
   }
-};
+}
+

@@ -29,6 +29,7 @@
   "homepage": "https://github.com/adrianlafond/firefox-dictionary#readme",
   "devDependencies": {
     "@types/jest": "^27.0.1",
+    "@types/jsdom": "^16.2.13",
     "@types/webextension-polyfill": "^0.8.0",
     "concat": "^1.0.3",
     "del-cli": "^4.0.1",

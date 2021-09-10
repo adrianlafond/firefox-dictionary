@@ -18,7 +18,7 @@ const dictionary: any = {
       });
     }, 250);
 
-    const result = await search.define(word, dictionary.getSiteLang() || options.lang);
+    const result = await Search.define(word, dictionary.getSiteLang() || options.lang);
     clearTimeout(dictionary.loadingTimeout);
     dictionary.createPanel();
     dictionary.showPanel();
@@ -75,7 +75,7 @@ const dictionary: any = {
     );
 
     window.addEventListener('mousedown', dictionary.onMouseDown);
-    // window.addEventListener('blur', dictionary.onWindowBlur);
+    window.addEventListener('blur', dictionary.onWindowBlur);
     window.addEventListener('keydown', dictionary.onKeyDown);
   },
 
@@ -136,10 +136,10 @@ const dictionary: any = {
     const searchData = options.search === 'other'
       ? {
         label: 'the Web',
-        href: search.getWebUrl(options.searchUrl, word, lang),
+        href: Search.getWebUrl(options.searchUrl, word, lang),
       } : {
         label: SEARCH[options.search as keyof typeof SEARCH].label,
-        href: search.getWebUrl(
+        href: Search.getWebUrl(
           SEARCH[options.search as keyof typeof SEARCH].url,
           word,
           lang,

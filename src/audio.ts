@@ -1,4 +1,14 @@
-const audio: any = {
+const audio: {
+  tracks: { [key: string]: HTMLAudioElement };
+  disabled: boolean;
+  panel: HTMLElement | null;
+  init: (panel: HTMLElement) => void;
+  destroy: () => void;
+  disableButtons: () => void;
+  showCspWarning: () => void;
+  handleSecurityPolicyViolation: (event: SecurityPolicyViolationEvent) => void;
+  playAudio: (event: MouseEvent) => void;
+} = {
   tracks: {},
   disabled: false,
   panel: null,
@@ -24,9 +34,9 @@ const audio: any = {
 
   destroy() {
     if (audio.panel) {
-      const audioButtons = audio.panel.querySelectorAll(`button[${AUDIO_TRACK}]`);
+      const audioButtons = audio.panel.querySelectorAll(`button[${AUDIO_TRACK}]`) || [];
       for (let i = 0; i < audioButtons.length; i++) {
-        audioButtons[i].removeEventListener('click', audio.playAudio);
+        (audioButtons[i] as HTMLButtonElement).removeEventListener('click', audio.playAudio);
       }
       audio.tracks = {};
       audio.panel = null;
@@ -35,7 +45,7 @@ const audio: any = {
   },
 
   disableButtons() {
-    const audioButtons = audio.panel.querySelectorAll(`button[${AUDIO_TRACK}]`);
+    const audioButtons = audio.panel?.querySelectorAll(`button[${AUDIO_TRACK}]`) || [];
     for (let i = 0; i < audioButtons.length; i++) {
       (audioButtons[i] as HTMLButtonElement).disabled = true;
     }
@@ -43,7 +53,7 @@ const audio: any = {
   },
 
   showCspWarning() {
-    const warning = audio.panel.querySelector(`.${BLOCK}__csp`);
+    const warning = audio.panel?.querySelector(`.${BLOCK}__csp`);
     if (warning) {
       warning.classList.add(`${BLOCK}__csp--shown`);
     }
