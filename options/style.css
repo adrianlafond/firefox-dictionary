@@ -1,0 +1,54 @@
+html {
+  height: 100%;
+}
+body {
+  margin: 1rem 0;
+  height: 100%;
+}
+
+.dict-opts {
+  font-family: sans-serif;
+}
+
+.dict-opts__form-group {
+  margin: 0 0 1rem;
+}
+
+.dict-opts__input-group {
+  display: flex;
+  align-items: center;
+}
+
+.dict-opts__input-label {
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  margin: 0 0.25rem 0 0;
+}
+
+.dict-opts__input-text {
+  font-size: 14px;
+  margin: 0.25rem 0 0;
+  line-height: 1.5;
+  color: #666;
+}
+
+.dict-opts__search-url {
+  display: none;
+  margin: 0 0 0 0.25rem;
+  flex-grow: 1;
+}
+.dict-opts__search-url--shown {
+  display: inline-block;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #23222b;
+    color: white;
+  }
+  .dict-opts__input-text {
+    color: #aaa;
+  }
+}
+

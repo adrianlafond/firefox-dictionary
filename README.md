@@ -1,2 +1,2 @@
 # firefox-dictionary
-A dictionary add-on for FireFox
+A dictionary add-on for Firefox

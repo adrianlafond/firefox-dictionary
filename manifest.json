@@ -1,0 +1,46 @@
+{
+  "manifest_version": 2,
+  "name": "Handy Dictionary",
+  "version": "1.0",
+  "description": "Contextual dictionary for Firefox that uses https://dictionaryapi.dev/",
+  "icons": {
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png"
+  },
+  "background": {
+    "scripts": [
+      "js/constants.js",
+      "js/background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content/handlebars.min.js",
+        "content/popper.min.js",
+        "js/constants.js",
+        "js/template.js",
+        "js/search.js",
+        "js/audio.js",
+        "js/dictionary.js"
+      ],
+      "css": ["content/dictionary.css"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "options_ui": {
+    "page": "options/index.html",
+    "browser_style": true,
+    "chrome_style": true
+  },
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "tabs",
+    "https://api.dictionaryapi.dev/"
+  ]
+}
