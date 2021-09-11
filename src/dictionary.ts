@@ -76,6 +76,7 @@ const dictionary: any = {
 
     window.addEventListener('mousedown', dictionary.onMouseDown);
     window.addEventListener('blur', dictionary.onWindowBlur);
+    window.addEventListener('pagehide', dictionary.onWindowBlur);
     window.addEventListener('keydown', dictionary.onKeyDown);
   },
 
@@ -103,6 +104,7 @@ const dictionary: any = {
     dictionary.panel.classList.remove(`${APP_ID}--shown`);
     window.removeEventListener('mousedown', dictionary.onMouseDown);
     window.removeEventListener('blur', dictionary.onWindowBlur);
+    window.removeEventListener('pagehide', dictionary.onWindowBlur);
     window.removeEventListener('keydown', dictionary.onKeyDown);
   },
 
