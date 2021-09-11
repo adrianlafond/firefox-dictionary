@@ -4,8 +4,8 @@
   "version": "1.0",
   "description": "Contextual dictionary for Firefox that uses https://dictionaryapi.dev/",
   "icons": {
-    "48": "icons/icon-48.png",
-    "96": "icons/icon-96.png"
+    "48": "icons/handy-48.png",
+    "96": "icons/handy-96.png"
   },
   "background": {
     "scripts": [
