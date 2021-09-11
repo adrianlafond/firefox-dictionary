@@ -58,14 +58,14 @@ const TEMPLATE = `
         {{/each}}
 
         <p class="${BLOCK}__csp">
-          Audio of this word's pronunciation has been disabled by a content security policy on this website.
+          Audio of this word's pronunciation cannot be played because of a content security policy on this website.
         </p>
       {{/if}}
     </div>
   </div>
   <div class="${BLOCK}__status-bar">
     <a href="{{search.href}}" target="${BLOCK}-{{search.key}}">
-      Look up on {{search.label}}
+      Look up on {{search.label}} &rsaquo;
     </a>
   </div>
   <div class="${BLOCK}__arrow"></div>
