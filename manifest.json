@@ -24,8 +24,8 @@
         "js/constants.js",
         "js/template.js",
         "js/search.js",
-        "js/audio.js",
-        "js/dictionary.js"
+        "js/pronunciation-audio.js",
+        "js/handy-dictionary.js"
       ],
       "css": ["content/dictionary.css"],
       "run_at": "document_end",

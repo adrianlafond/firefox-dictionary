@@ -1,9 +1,3 @@
-
-function onSelectLangInput(event: Event) {
-  const { value } = event.target as HTMLSelectElement;
-  browser.storage.local.set({ lang: value });
-}
-
 function onSelectSearchInput(event: Event) {
   const { value } = event.target as HTMLSelectElement;
   browser.storage.local.set({ search: value });
@@ -68,7 +62,6 @@ function destroySelect(name: string, onInput: (event: Event) => void) {
 }
 
 function destroyOptions() {
-  destroySelect('lang', onSelectLangInput);
   destroySelect('search', onSelectSearchInput);
   destroyInputSearch();
   window.removeEventListener('pagehide', destroyOptions);
@@ -81,7 +74,6 @@ function initOptions() {
       searchUrl: '',
     })
     .then((record: Record<string, any>) => {
-      initSelect('lang', record.lang, onSelectLangInput);
       initSelect('search', record.search, onSelectSearchInput);
       initInputSearch(record.searchUrl, record.search === 'other');
     });
