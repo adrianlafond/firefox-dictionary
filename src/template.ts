@@ -1,5 +1,17 @@
 const BLOCK = APP_ID;
 
+interface TemplateData {
+  loading?: boolean;
+  notFound?: string;
+  error?: number;
+  search: {
+    key: string;
+    label: string;
+    href: string;
+  };
+  data?: ApiResult[];
+}
+
 const TEMPLATE = `
   <div class="${BLOCK}__content">
     <div class="${BLOCK}__content-scroll">
@@ -9,7 +21,7 @@ const TEMPLATE = `
         <strong>{{notFound}}</strong> was not found.
       {{else if error}}
         Uh oh! An error occurred. Please try again later.
-      {{else}}
+      {{else if data}}
         {{#each data}}
           <div class="${BLOCK}__entry">
 
