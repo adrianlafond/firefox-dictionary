@@ -120,7 +120,6 @@ class HandyDictionary {
   }
 
   displaySearch(word: string, result: SearchResult, options: Record<string, any>) {
-    console.log(result);
     const { error, data } = result;
     if(error === 404) {
       this.panel.innerHTML = this.getTemplateHtml({
