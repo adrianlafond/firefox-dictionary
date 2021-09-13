@@ -19,7 +19,7 @@
         "<all_urls>"
       ],
       "js": [
-        "content/handlebars.min.js",
+        "content/handlebars.min-v4.7.7.js",
         "content/popper.min.js",
         "js/constants.js",
         "js/template.js",
