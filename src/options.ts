@@ -61,9 +61,31 @@ function destroySelect(name: string, onInput: (event: Event) => void) {
   }
 }
 
+function onResetClick() {
+  browser.storage.local.clear().then(() => {
+    destroyOptions();
+    initOptions();
+  });
+}
+
+function initReset() {
+  const button: HTMLButtonElement | null = document.querySelector('button[name=reset]');
+  if (button) {
+    button.addEventListener('click', onResetClick);
+  }
+}
+
+function destroyReset() {
+  const button: HTMLButtonElement | null = document.querySelector('button[name=reset]');
+  if (button) {
+    button.removeEventListener('click', onResetClick);
+  }
+}
+
 function destroyOptions() {
   destroySelect('search', onSelectSearchInput);
   destroyInputSearch();
+  destroyReset();
   window.removeEventListener('pagehide', destroyOptions);
 }
 
@@ -76,6 +98,7 @@ function initOptions() {
     .then((record: Record<string, any>) => {
       initSelect('search', record.search, onSelectSearchInput);
       initInputSearch(record.searchUrl, record.search === 'other');
+      initReset();
     });
   window.addEventListener('pagehide', destroyOptions);
 }
