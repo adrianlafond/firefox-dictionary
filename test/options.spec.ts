@@ -15,10 +15,6 @@ describe('options', () => {
     $document = $window.document;
   });
 
-  it('has a select for lang', () => {
-    expect($document.querySelector('select[name=lang]')).toBeDefined();
-  });
-
   it('has a select for search engine', () => {
     expect($document.querySelector('select[name=search]')).toBeDefined();
   });
