@@ -1,0 +1,12 @@
+{
+  "addons": {
+    "{mail@adrianlafond.com--handy-dictionary}": {
+      "updates": [
+        {
+          "version": "0.1.0",
+          "update_link": "https://cdn.jsdelivr.net/gh/adrianlafond/firefox-dictionary/dist/handy-dictionary-0.1.0.xpi"
+        }
+      ]
+    }
+  }
+}
