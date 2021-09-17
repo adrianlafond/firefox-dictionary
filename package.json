@@ -1,6 +1,6 @@
 {
   "name": "firefox-dictionary",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Contextual dictionary for Firefox that uses https://dictionaryapi.dev/",
   "main": "index.js",
   "scripts": {

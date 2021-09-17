@@ -1,0 +1,12 @@
+{
+  "addons": {
+    "{8bae6d6f-31be-4b6e-a0f2-94c8db4f2797}": {
+      "updates": [
+        {
+          "version": "0.1.0",
+          "update_link": "https://cdn.jsdelivr.net/gh/adrianlafond/firefox-dictionary/dist/handy_dictionary-0.1.0-fx.xpi"
+        }
+      ]
+    }
+  }
+}

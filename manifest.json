@@ -3,6 +3,11 @@
   "name": "Handy Dictionary",
   "version": "1.0",
   "description": "Contextual dictionary for Firefox that uses https://dictionaryapi.dev/",
+  "browser_specific_settings": {
+    "gecko": {
+      "update_url": "https://cdn.jsdelivr.net/gh/adrianlafond/firefox-dictionary/updates.json"
+    }
+  },
   "icons": {
     "48": "icons/handy-48.png",
     "96": "icons/handy-96.png"
@@ -19,7 +24,7 @@
         "<all_urls>"
       ],
       "js": [
-        "content/handlebars.min.js",
+        "content/handlebars.min-v4.7.7.js",
         "content/popper.min.js",
         "js/constants.js",
         "js/template.js",
