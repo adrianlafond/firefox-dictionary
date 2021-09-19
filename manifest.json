@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Handy Dictionary",
-  "version": "1.0",
+  "version": "0.1.0",
   "description": "Contextual dictionary for Firefox that uses https://dictionaryapi.dev/",
   "icons": {
     "48": "icons/handy-48.png",
